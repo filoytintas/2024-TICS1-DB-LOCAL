@@ -1,0 +1,73 @@
+# Instalación de MongoDB
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
+
+# Crear un usuario para que administre la base de datos que queremos (magnitudes) MongoDB
+mongo
+use magnitudes  
+db.createUser({
+  user: "root",
+  pwd: "example",
+  roles: [ { role: "dbOwner", db: "magnitudes" }]
+})
+db.getUsers()
+
+# Instalación de Node.js y npm
+sudo apt update
+sudo apt install -y nodejs npm
+
+# Instalación de mongo-express
+sudo npm install -g mongo-express@1.0.0
+
+# Configuración de mongo-express
+sudo nano /usr/local/lib/node_modules/mongo-express/config.js
+
+# Contenido de config.js
+module.exports = {
+    mongodb: {
+        server: '127.0.0.1',
+        port: 27017,
+        ssl: false,
+        sslValidate: false,
+        autoReconnect: true,
+        poolSize: 4,
+        admin: true,
+        auth: [
+        {
+            database: 'admin',
+            username: 'root',
+            password: 'example'
+        }
+        ],
+        adminUsername: 'admin',
+        adminPassword: 'pass'
+    },
+    site: {
+        baseUrl: '/',
+        cookieKeyName: 'mongo-express',
+        cookieSecret: 'cookiesecret',
+        host: '127.0.0.1',
+        port: 8081,
+        requestSizeLimit: '50mb',
+        sessionSecret: 'sessionsecret'
+    }
+};
+
+# Ejecutar mongo-express
+mongo-express
+
+# Configurar y ejecutar la API
+sudo mkdir /etc/app
+sudo mkdir /etc/app/api
+cd /etc/app/api
+sudo npm init -y
+sudo npm install express mongoose
+
+# Crear el archivo index.js
+sudo nano index.js
+
+# Copiar el contenido del archivo index.js proporcionado en ayudantía en su archivo local alojado en /etc/app/api
+
+# Ejecutar la API
+node index.js

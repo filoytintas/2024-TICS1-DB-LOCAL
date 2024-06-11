@@ -1,3 +1,3 @@
 # 2024-TICS1-DB-LOCAL
 
-Seguir las instrucciones señaladas en 'resumen_de_instrucciones.txt'
+Clonar el repositorio y luego seguir las instrucciones señaladas en 'resumen_de_instrucciones.txt'
